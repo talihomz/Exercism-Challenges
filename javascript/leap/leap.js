@@ -4,15 +4,24 @@
 //
 
 var Year = function (input) {
-//
-// YOUR CODE GOES HERE
-//  
+    this.yearInput = input;
 };
 
 Year.prototype.isLeap = function () {
-//
-// YOUR CODE GOES HERE
-//
+
+  var year = this.yearInput;
+
+  // if its evenly divisible by 4
+  // except evenly divisibly by 400
+  if( year % 4 == 0 &&
+    (year % 100 != 0) || (year % 400 == 0)
+  )
+  {
+    return true;
+  }
+
+  return false;
+
 };
 
 module.exports = Year;
