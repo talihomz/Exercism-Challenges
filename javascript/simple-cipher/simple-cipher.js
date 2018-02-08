@@ -1,17 +1,18 @@
 function Cipher(key){
 
+  this.lowerA = 97;
+  this.lowerZ = 122;
+
   if(key == null)
   {
     // generate for us a new key
-    var lowerA = 97;
-    var lowerZ = 122;
     var randomCharArray = [];
 
     for(var a = 0; a < 100; a++)
     {
       // generate between lowerA and lowerZ
-      var min = Math.ceil(lowerZ);
-      var max = Math.floor(lowerA);
+      var min = Math.ceil(this.lowerZ);
+      var max = Math.floor(this.lowerA);
       var num = Math.floor(Math.random() * (max - min + 1)) + min;
 
       // convert to char
@@ -23,8 +24,6 @@ function Cipher(key){
 
     // join array to get key
     this.key = randomCharArray.join('');
-
-    console.log("Random key", this.key);
 
   }else{
 
@@ -41,35 +40,51 @@ function Cipher(key){
     if(key.match(/\d/))
       throw new Error('Bad key');
 
+    this.key = key;
+
   }
 }
 
 Cipher.prototype.encode = function(plaintext){
 
-  // convert each char in key to its ascii value
-
+  var dblshift = plaintext == this.key ? 2 : 1;
+  var results = []
   // for each character in the plain plaintext
-  // 1. Convert to ascii code
-  // 2. Get corresponding ascii character on the key
-  // 3. Get the corresponding character's shift value
-  // 4. Add the shift to plaintext character
-  // 5. Add ciphered character to ciphertext randomCharArray
+  for (var i = 0; i < plaintext.length; i++) {
+    var c = plaintext.charCodeAt(i);
+    var k = this.key.charCodeAt(i);
+    var shift = (k - this.lowerA) * dblshift;
+    newchar = c + shift;
+    if (newchar > this.lowerZ) {
+      var diff = newchar - this.lowerZ - 1;
+      newchar = this.lowerA + diff;
+    }
+    results.push(String.fromCharCode(newchar));
+  }
 
   // return joined array
+  return results.join("");
 }
 
 
 Cipher.prototype.decode = function(ciphertext){
-  // convert each char in key to its ascii value
 
+  var results = []
   // for each character in the plain plaintext
-  // 1. Convert to ascii code
-  // 2. Get corresponding ascii character on the key
-  // 3. Get the corresponding character's shift value
-  // 4. Subtract the shift to plaintext character
-  // 5. Add ciphered character to ciphertext randomCharArray
+  for (var i = 0; i < ciphertext.length; i++) {
+    var c = ciphertext.charCodeAt(i);
+    var k = this.key.charCodeAt(i);
+    var shift = (k - this.lowerA) * 1;
+    var newchar = c - shift;
+    if (newchar < this.lowerA) {
+      var diff = this.lowerA - newchar - 1;
+      newchar = this.lowerZ - diff;
+    }
+    results.push(String.fromCharCode(newchar));
+  }
 
   // return joined array
+  return results.join("");
 }
 
 module.exports  = Cipher;
