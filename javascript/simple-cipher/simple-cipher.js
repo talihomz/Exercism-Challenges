@@ -45,6 +45,11 @@ function Cipher(key){
   }
 }
 
+// TODO:
+// encode should handle messages longer than the key
+// fix double shift
+// should be reversible
+
 Cipher.prototype.encode = function(plaintext){
 
   var dblshift = plaintext == this.key ? 2 : 1;
