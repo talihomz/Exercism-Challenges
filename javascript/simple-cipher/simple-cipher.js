@@ -52,13 +52,14 @@ function Cipher(key){
 
 Cipher.prototype.encode = function(plaintext){
 
-  var dblshift = plaintext == this.key ? 2 : 1;
+  // var dblshift = plaintext == this.key ? 2 : 1;
   var results = []
+
   // for each character in the plain plaintext
   for (var i = 0; i < plaintext.length; i++) {
     var c = plaintext.charCodeAt(i);
-    var k = this.key.charCodeAt(i);
-    var shift = (k - this.lowerA) * dblshift;
+    var k = this.key.charCodeAt(i % this.key.length);
+    var shift = k - this.lowerA;
     newchar = c + shift;
     if (newchar > this.lowerZ) {
       var diff = newchar - this.lowerZ - 1;
@@ -78,8 +79,8 @@ Cipher.prototype.decode = function(ciphertext){
   // for each character in the plain plaintext
   for (var i = 0; i < ciphertext.length; i++) {
     var c = ciphertext.charCodeAt(i);
-    var k = this.key.charCodeAt(i);
-    var shift = (k - this.lowerA) * 1;
+    var k = this.key.charCodeAt(i % this.key.length);
+    var shift = k - this.lowerA;
     var newchar = c - shift;
     if (newchar < this.lowerA) {
       var diff = this.lowerA - newchar - 1;
