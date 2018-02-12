@@ -4,33 +4,25 @@ function Bob() {
 
 Bob.prototype.hey = function(input) {
 
-  // test if input is empty
-  if (input.length == 0 || !input.match(/[a-zA-Z]/)) {
-    if (!input.match(/\d/)) {
-      return 'Fine. Be that way!';
-    }
-  }
+  // Whatever.
+  // 1. Ends with a character
+  // 2. Ends with whitespace
+  // 3. Ends with '.'
+  // 4. Ends with digit
+  // 5. Ends with '!'
 
-  // test for questions
-  if (input[input.length - 1] == '?') {
-    if (input != input.toUpperCase()) {
-      return 'Sure.';
-    }
-  }
+  // Whoa, chill out!
+  // 1. All upper case
 
-  if (input.match(/\d/)) {
-    if (input != input.toUpperCase()) {
-      return 'Whatever.';
-    }
-  }
+  // Sure.
+  // 1. Ends with a question mark
+  // 2. Have  whitespaces after the last question mark
 
-  // test for yelling
-  if (input == input.toUpperCase()) {
-    return 'Whoa, chill out!';
-  }
+  // Fine. Be that way!
+  // 1. Whitespace only
+  // 2. Empty starting
+  // 3. Escape characters
 
-
-  return 'Whatever.';
 }
 
 module.exports = Bob;
