@@ -1,7 +1,7 @@
 class Complement
-  def self.of_dna
+
+  def self.of_dna input
+    return '' if input.match(/^[CGTA]+$/) == nil
   end
 
-  def self.of_rna
-  end
 end
