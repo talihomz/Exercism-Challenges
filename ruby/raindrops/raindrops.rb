@@ -3,17 +3,17 @@ class Raindrops
   def self.convert(n)
     output = ''
     divisor = 1
+    mapping = {
+      3 => 'Pling',
+      5 => 'Plang',
+      7 => 'Plong'
+    }
 
-=begin
-    output = [2, 3, 7].each do |num|
-      until divisor == n
-        # CONTINUE
-        divisor += 1
-      end
+    mapping.each do |k, v|
+      output << v if n % k == 0
     end
-=end
 
-    output
+    output == '' ? n.to_s : output
   end
 
 end

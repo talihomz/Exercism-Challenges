@@ -99,7 +99,7 @@ class RaindropsTest < Minitest::Test
   # In your file, it will look like this:
   #
    module BookKeeping
-     VERSION = 1 # Where the version number matches the one in the test.
+     VERSION = 3 # Where the version number matches the one in the test.
    end
   #
   # If you are curious, read more about constants on RubyDoc:
