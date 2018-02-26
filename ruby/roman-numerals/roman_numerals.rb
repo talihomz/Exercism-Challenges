@@ -1,5 +1,4 @@
 class Fixnum
-<<<<<<< HEAD
   @@roman_converter = [
     {
       range: "1 - 10",
@@ -45,11 +44,4 @@ class Fixnum
 
     return result.join('')
   end
-=======
-
-  def to_roman
-    self
-  end
-
->>>>>>> d38b0b7b708255f2fe0091aa060e4c0445e4d033
 end
