@@ -5,18 +5,16 @@ class Sieve
 
   def primes
     result = []
+    marked = []
 
-    data_hash = Hash[(2..@input).to_a.collect { |number| [number, false] }]
-    data_hash.each do |k,v|
-      continue if v
+    (2..@input).to_a.each do |num|
+      next if marked.include?(num)
 
-      (@input / k).times do |number|
-        puts data_hash
-        puts "Index: #{(number + 1) * k}"
-        # data_hash[(number + 1) * k] = true
+      (@input / num).times do |n|
+        marked << (n + 1) * num
       end
 
-      result << k
+      result << num
     end
 
     result
