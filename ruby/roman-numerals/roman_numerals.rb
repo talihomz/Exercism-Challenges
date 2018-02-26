@@ -1,44 +1,62 @@
 class Fixnum
-  @@roman_converter = [
-    {
-      range: "1 - 10",
-      lower: 'I',
-      mid: 'V'
+
+  ROMAN_NUMERALS = {
+    1 => { # length 1
+      1 => 'I',
+      4 => 'IV',
+      5 => 'V',
+      9 => 'IX'
     },
-    {
-      range: "11 - 100",
-      lower: 'X',
-      mid: 'L'
+    2 => { # length 2
+      1 => 'X',
+      4 => 'XL',
+      5 => 'L',
+      9 => 'XC'
     },
-    {
-      range: "101 - 1000",
-      lower: 'C',
-      mid: 'D'
+    3 => { # length 3
+      1 => 'C',
+      4 => 'CD',
+      5 => 'D',
+      9 => 'CM'
     },
-    {
-      range: "1001 - n",
-      lower: 'M'
+    4 => { # length 4
+      1 => 'M',
+      4 => '',
+      5 => '',
+      9 => ''
     }
-  ]
+  }
 
   def to_roman
+    digit_array = self.to_s.split('').collect do |n| n.to_i end
+    digit_hash = {}
+
+    digit_array.each_with_index do |n, idx|
+      digit_hash[digit_array.length - idx] = n
+    end
+
     result = []
-    self.to_s.split('').collect { |n| n.to_i }.reverse.each_with_index do |number, idx|
 
-      mid = @@roman_converter[idx][:mid]
-      lower = @@roman_converter[idx][:lower]
-      next_lower = idx == 3 ? '' : @@roman_converter[idx][:lower] * 10
+    digit_hash.each do |k, v|
+      current_number = v
 
-      if number < 4
-        result << number.times { result << "#{lower}" }
-      elsif number == 4
-        result << "#{lower}#{mid}"
-      elsif number == 5
-        result << "#{mid}"
-      elsif number < 9
-        result <<  "#{mid}" + (number - 5).times { "#{lower}" }
-      else
-        result << "#{next_lower}"
+      until current_number == 0
+        if current_number < 4
+          result << ROMAN_NUMERALS[k][1]
+          current_number -= 1
+        elsif current_number == 4
+          result << ROMAN_NUMERALS[k][4]
+          current_number = 0
+        elsif current_number == 5
+          result << ROMAN_NUMERALS[k][5]
+          current_number = 0
+        elsif current_number < 9
+          result << ROMAN_NUMERALS[k][5]
+          current_number -= 5
+        else
+          result << ROMAN_NUMERALS[k][9]
+          current_number = 0
+        end
       end
     end
 
