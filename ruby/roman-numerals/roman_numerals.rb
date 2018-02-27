@@ -42,24 +42,30 @@ class Fixnum
 
       until current_number == 0
         if current_number < 4
-          result << ROMAN_NUMERALS[k][1]
+          result << get_roman_digit(k, 1)
           current_number -= 1
         elsif current_number == 4
-          result << ROMAN_NUMERALS[k][4]
+          result << get_roman_digit(k, 4)
           current_number = 0
         elsif current_number == 5
-          result << ROMAN_NUMERALS[k][5]
+          result << get_roman_digit(k, 5)
           current_number = 0
         elsif current_number < 9
-          result << ROMAN_NUMERALS[k][5]
+          result << get_roman_digit(k, 5)
           current_number -= 5
         else
-          result << ROMAN_NUMERALS[k][9]
+          result << get_roman_digit(k, 9)
           current_number = 0
         end
       end
     end
 
     return result.join('')
+  end
+
+
+
+  def get_roman_digit(position, digit)
+    return ROMAN_NUMERALS[position][digit]
   end
 end
