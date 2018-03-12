@@ -11,31 +11,57 @@ class BowlingTest < Minitest::Test
     rolls.each { |pins| @game.roll(pins) }
   end
 
+<<<<<<< HEAD
   def test_should_be_able_to_score_a_game_with_all_zeros
+=======
+  def test_from_readme_should_work
+    record([10, 5, 5, 9, 0])
+    assert_equal 48, @game.score
+  end
+
+  def test_should_be_able_to_score_a_game_with_all_zeros
+    skip
+>>>>>>> 1bfabebfa73bcaf26c3be3b4bcaae940ae338637
     record([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     assert_equal 0, @game.score
   end
 
   def test_should_be_able_to_score_a_game_with_no_strikes_or_spares
+<<<<<<< HEAD
     
+=======
+    skip
+>>>>>>> 1bfabebfa73bcaf26c3be3b4bcaae940ae338637
     record([3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6])
     assert_equal 90, @game.score
   end
 
   def test_a_spare_followed_by_zeros_is_worth_ten_points
+<<<<<<< HEAD
     
+=======
+    skip
+>>>>>>> 1bfabebfa73bcaf26c3be3b4bcaae940ae338637
     record([6, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     assert_equal 10, @game.score
   end
 
   def test_points_scored_in_the_roll_after_a_spare_are_counted_twice
+<<<<<<< HEAD
     
+=======
+    skip
+>>>>>>> 1bfabebfa73bcaf26c3be3b4bcaae940ae338637
     record([6, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     assert_equal 16, @game.score
   end
 
   def test_consecutive_spares_each_get_a_one_roll_bonus
+<<<<<<< HEAD
     
+=======
+    skip
+>>>>>>> 1bfabebfa73bcaf26c3be3b4bcaae940ae338637
     record([5, 5, 3, 7, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     assert_equal 31, @game.score
   end
@@ -47,19 +73,31 @@ class BowlingTest < Minitest::Test
   end
 
   def test_a_strike_earns_ten_points_in_a_frame_with_a_single_roll
+<<<<<<< HEAD
     
+=======
+    skip
+>>>>>>> 1bfabebfa73bcaf26c3be3b4bcaae940ae338637
     record([10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     assert_equal 10, @game.score
   end
 
   def test_points_scored_in_the_two_rolls_after_a_strike_are_counted_twice_as_a_bonus
+<<<<<<< HEAD
     
+=======
+    skip
+>>>>>>> 1bfabebfa73bcaf26c3be3b4bcaae940ae338637
     record([10, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     assert_equal 26, @game.score
   end
 
   def test_consecutive_strikes_each_get_the_two_roll_bonus
+<<<<<<< HEAD
     
+=======
+    skip
+>>>>>>> 1bfabebfa73bcaf26c3be3b4bcaae940ae338637
     record([10, 10, 10, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     assert_equal 81, @game.score
   end
@@ -89,7 +127,11 @@ class BowlingTest < Minitest::Test
   end
 
   def test_all_strikes_is_a_perfect_game
+<<<<<<< HEAD
     
+=======
+    skip
+>>>>>>> 1bfabebfa73bcaf26c3be3b4bcaae940ae338637
     record([10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10])
     assert_equal 300, @game.score
   end
@@ -214,14 +256,24 @@ class BowlingTest < Minitest::Test
   #
   # In your file, it will look like this:
   #
+<<<<<<< HEAD
   module BookKeeping
     VERSION = 3 # Where the version number matches the one in the test.
   end
+=======
+  # module BookKeeping
+  #   VERSION = 1 # Where the version number matches the one in the test.
+  # end
+>>>>>>> 1bfabebfa73bcaf26c3be3b4bcaae940ae338637
   #
   # If you are curious, read more about constants on RubyDoc:
   # http://ruby-doc.org/docs/ruby-doc-bundle/UsersGuide/rg/constants.html
   def test_bookkeeping
+<<<<<<< HEAD
     
+=======
+    skip
+>>>>>>> 1bfabebfa73bcaf26c3be3b4bcaae940ae338637
     assert_equal 3, BookKeeping::VERSION
   end
 end
