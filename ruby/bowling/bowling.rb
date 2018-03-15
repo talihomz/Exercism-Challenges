@@ -1,6 +1,16 @@
+require 'pp'
+
 class Game
   class BowlingError < StandardError
   end
+
+  # 3, 3, 6, 4, 5
+  # [3, 3]
+  # [6, 4, 5]
+  # [5]
+
+  @spare = 1
+  @strike = 2
 
   def initialize
     @frames = {}
@@ -8,40 +18,58 @@ class Game
   end
 
   def roll pins
-    # input validation
+    # validations
     raise BowlingError if pins < 0 or pins > 10
-
-    # frame validation
     raise BowlingError unless @frames[10].nil?
 
-    @current_frame << pins
+    if is_strike?
 
-    process_frames
-  end
-
-  def process_frames
-    # add frame scoring logic
-    # include strike logic
-    # include spare logic
-
-    if(is_full?)
+    elsif is_spare?
+      
+    elsif is_full?
       @frames[@frames.length + 1] = Array.new(@current_frame)
       @current_frame.clear
+      @current_frame << pins
+    elsif is_last_throw?
+      @current_frame << pins
+      @frames[@frames.length + 1] = Array.new(@current_frame)
+    else
+      @current_frame << pins
     end
+  end
+
+  def is_strike?
+    @current_frame[0] == 10
+  end
+
+  def is_spare?
+    frame_sum(@current_frame) == 10 and @current_frame.length == 2
   end
 
   def is_full?
     raise BowlingError if frame_sum(@current_frame) > 10
-    @current_frame.include?(10) || @current_frame.length == 2
+    @current_frame.length == 2
+  end
+
+  def is_last_throw?
+    @frames.length == 2 and !@current_frame.empty?
   end
 
   def score
-    raise BowlingError if @frames.empty? || @frames[10].nil?
+    pp @frames
+    # raise BowlingError if @frames.empty? || @frames[10].nil?
+    
+    res = 0
+    @frames.each { |k, v| res += frame_sum(v) }
+    res
   end
 
-  def get_frame_score
+  def frame_sum frame
+    frame.inject(0) do |sum, item| sum + item end 
+  end
+end
 
-  #   all_frames = []
+ #   all_frames = []
   #   skipped = false
 
   #   # build the frames
@@ -81,9 +109,3 @@ class Game
   #   end   
 
   #   result
-  end
-
-  def frame_sum frame
-    frame.inject(0) do |sum, item| sum + item end 
-  end
-end
