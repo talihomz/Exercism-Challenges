@@ -4,14 +4,6 @@ class Game
   class BowlingError < StandardError
   end
 
-  # 3, 3, 6, 4, 5
-  # [3, 3]
-  # [6, 4, 5]
-  # [5]
-
-  @spare = 1
-  @strike = 2
-
   def initialize
     @frames = {}
     @current_frame = []
@@ -20,26 +12,38 @@ class Game
   def roll pins
     # validations
     raise BowlingError if pins < 0 or pins > 10
-    raise BowlingError unless @frames[10].nil?
+    raise BowlingError unless @frames[10].nil? 
+
+    # 10, 5, 3, 0
+
+    # []   s   => f
+    # [10] s   => f
+    # [10, 5]  => f
+    # [10,5,3] => 
 
     if is_strike?
-
+      @current_frame << pins
+      @frames[@frames.length + 1] = Array.new(@current_frame)
+      @current_frame.shift
     elsif is_spare?
-      
+      @current_frame << pins
+      @frames[@frames.length + 1] = Array.new(@current_frame)
+      @current_frame.clear
+      @current_frame << pins
     elsif is_full?
       @frames[@frames.length + 1] = Array.new(@current_frame)
       @current_frame.clear
       @current_frame << pins
     elsif is_last_throw?
       @current_frame << pins
-      @frames[@frames.length + 1] = Array.new(@current_frame)
+      @frames[@frames.length + 1] = Array.new(@current_frame) unless is_spare?
     else
       @current_frame << pins
     end
   end
 
   def is_strike?
-    @current_frame[0] == 10
+    @current_frame.length == 2 and @current_frame.first == 10
   end
 
   def is_spare?
@@ -47,17 +51,20 @@ class Game
   end
 
   def is_full?
-    raise BowlingError if frame_sum(@current_frame) > 10
-    @current_frame.length == 2
+    raise BowlingError if is_strike? && frame_sum(@current_frame) > 10 
+    @current_frame.length == 2 && !is_strike?
   end
 
   def is_last_throw?
-    @frames.length == 2 and !@current_frame.empty?
+    @frames.length == 9 and !@current_frame.empty?
+  end
+
+  def is_last_frame?
+    @frames.length == 9
   end
 
   def score
-    pp @frames
-    # raise BowlingError if @frames.empty? || @frames[10].nil?
+    raise BowlingError if @frames.empty? && @frames.length != 10
     
     res = 0
     @frames.each { |k, v| res += frame_sum(v) }
