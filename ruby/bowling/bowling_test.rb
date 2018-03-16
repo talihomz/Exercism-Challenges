@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require_relative 'bowling'
+require 'pp'
 
 # Common test data version: 1.0.1 26e345e
 class BowlingTest < Minitest::Test
@@ -110,10 +111,11 @@ class BowlingTest < Minitest::Test
   end
 
   def test_two_bonus_rolls_after_a_strike_in_the_last_frame_cannot_score_more_than_10_points
-    skip
     record([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 5])
     assert_raises Game::BowlingError do
       @game.roll(6)
+      pp @game.current_frame
+      pp @game.is_last_frame?
     end
   end
 
@@ -123,7 +125,6 @@ class BowlingTest < Minitest::Test
   end
 
   def test_the_second_bonus_rolls_after_a_strike_in_the_last_frame_cannot_be_a_strike_if_the_first_one_is_not_a_strike
-    skip
     record([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 6])
     assert_raises Game::BowlingError do
       @game.roll(10)
@@ -159,7 +160,6 @@ class BowlingTest < Minitest::Test
   end
 
   def test_bonus_rolls_for_a_strike_in_the_last_frame_must_be_rolled_before_score_can_be_calculated
-    skip
     record([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10])
     assert_raises Game::BowlingError do
       @game.score
@@ -167,7 +167,6 @@ class BowlingTest < Minitest::Test
   end
 
   def test_both_bonus_rolls_for_a_strike_in_the_last_frame_must_be_rolled_before_score_can_be_calculated
-    skip
     record([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10])
     assert_raises Game::BowlingError do
       @game.score
@@ -175,7 +174,6 @@ class BowlingTest < Minitest::Test
   end
 
   def test_bonus_roll_for_a_spare_in_the_last_frame_must_be_rolled_before_score_can_be_calculated
-    skip
     record([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 3])
     assert_raises Game::BowlingError do
       @game.score
